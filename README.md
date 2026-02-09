@@ -1,61 +1,80 @@
-Overview:
-This project presents a unified, hardware-efficient implementation of the Number Theoretic Transform (NTT) and Inverse NTT (INTT) targeting CRYSTALS-Kyber post-quantum cryptography.
-A single shared datapath is used to support both forward NTT (FNTT) and inverse NTT (INTT) operations, reducing area overhead compared to separate designs.
-Architecture Summary:
-Control Unit (FSM)
+# Unified NTT / INTT Accelerator for CRYSTALS-Kyber
 
-Controls NTT stages, butterfly scheduling, and mode selection (NTT / INTT)
+## Overview
+This project presents a **unified and hardware-efficient implementation** of the **Number Theoretic Transform (NTT)** and **Inverse NTT (INTT)** targeting **CRYSTALS-Kyber** post-quantum cryptography.
 
-Unified Butterfly Unit (BU)
+A **single shared datapath** is used to support both **forward NTT (FNTT)** and **inverse NTT (INTT)** operations, significantly reducing **area overhead** compared to separate forward and inverse designs.  
+The architecture is optimized for **resource efficiency**, making it suitable for **FPGA and ASIC implementations**.
 
-Performs both CT (forward) and GS (inverse) butterfly operations
+---
 
-Register Banks (RB1, RB2)
+## Architecture Summary
 
-Dual memory structure for polynomial storage and intermediate results
+### Control Unit (FSM)
+- Controls NTT stages and butterfly scheduling  
+- Selects operation mode (**NTT / INTT**)  
+- Manages overall computation flow  
 
-Zeta ROM
+### Unified Butterfly Unit (BU)
+- Supports both:
+  - **Cooley–Tukey (CT)** butterfly for forward NTT  
+  - **Gentleman–Sande (GS)** butterfly for inverse NTT  
+- Enables hardware reuse across both transforms  
 
-Stores Kyber twiddle factors
+### Register Banks (RB1, RB2)
+- Dual memory structure for:
+  - Polynomial coefficient storage  
+  - Intermediate computation results  
+- Supports efficient data access and swapping  
 
-Output Streaming Logic
+### Zeta ROM
+- Stores precomputed **Kyber twiddle factors (zetas)**  
+- Provides modular multiplication constants  
 
-Sequentially streams output coefficients after computation completes
-FPGA Flow
+### Output Streaming Logic
+- Sequentially streams output coefficients  
+- Activates after NTT/INTT computation completes  
 
-Xilinx Vivado
+---
 
-Synthesis
+## FPGA Flow
 
-Implementation
+**Tool:** Xilinx Vivado  
+- RTL Synthesis  
+- Implementation (Place & Route)  
+- Timing Analysis  
+- Power Estimation  
 
-Timing analysis
+### Target FPGA Devices
+- Artix-7  
+- Virtex-7  
 
-Power estimation
+---
 
-Target Devices:
+## ASIC Flow
 
-Artix-7
+- **Cadence Xcelium** – RTL functional simulation  
+- **Cadence Genus** – Logic synthesis  
+- **Cadence Innovus** – Place and Route exploration  
 
-Virtex-7
+---
 
-ASIC Flow
+## Implementation Results (Summary)
 
-Cadence Xcelium – RTL simulation
+- Very low **LUT and FF utilization** due to unified datapath design  
+- **Positive timing slack** achieved across implementation flows  
+- Reduced area compared to conventional standalone NTT architectures  
+- Suitable for **resource-constrained post-quantum cryptographic hardware**
 
-Cadence Genus – Logic synthesis
+---
 
-Cadence Innovus – Place and Route
-Implementation Results (Summary)
+## Applications
 
-Very low LUT and FF utilization due to unified datapath design
+- Post-quantum cryptographic accelerators  
+- Secure hardware for embedded systems  
+- Cryptographic engines for IoT and edge devices  
 
-Timing closure achieved with positive slack
+---
 
-Reduced area compared to state-of-the-art NTT accelerators
-
-Suitable for resource-constrained PQC hardware
-Applications
-
-Post-quantum cryptographic accelerators
-Secure hardware for embedded and IoT systems
+## Keywords
+NTT, INTT, CRYSTALS-Kyber, Post-Quantum Cryptography, FPGA, ASIC, RTL Design, SystemVerilog
